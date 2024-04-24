@@ -24,7 +24,6 @@ class OX(BaseCrossover):
         for i in range(2):
             start = random.randint(0, len(parent1) - 2)
             end = random.randint(start + 1, len(parent1) - 1)
-            print(start, end)
             sample = parents[i].genome[start:end]
             offspring[i].genome[start:end] = sample
             rest = [gene for gene in parents[1 - i].genome if gene not in sample]
