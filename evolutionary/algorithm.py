@@ -75,5 +75,9 @@ class Evolution:
                 next_generation += offspring
             self.population = Population(next_generation, self.population.selection_fn)
 
-        for individual in self.population.individuals:
-            print(individual, '->', individual.fitness())
+            # for individual in self.population.individuals:
+            #     print(individual, '->', individual.fitness())
+            # print('Fittest', self.fittest())
+
+    def fittest(self) -> Individual:
+        return max(self.population.individuals, key=lambda individual: individual.fitness())
