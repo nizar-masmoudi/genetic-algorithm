@@ -7,7 +7,6 @@ import random
 class SinglePoint(BaseCrossover):
     def __call__(self, parent1: alg.Individual, parent2: alg.Individual) -> Sequence['alg.Individual']:
         point = random.randint(0, len(parent1) - 1)
-        print(point)
         child1 = alg.Individual(
             genome=parent1.genome[:point] + parent2.genome[point:],
             fitness_fn=parent1.fitness_fn,
