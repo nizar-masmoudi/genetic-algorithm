@@ -2,7 +2,7 @@
 
 ## Selection Operators
 - [x] Random Selection
-- [ ] Tournament Selection
+- [x] Tournament Selection
 - [ ] Fitness Proportionate Selection
 - [x] Linear Ranking Selection
 - [ ] Exponential Ranking Selection
