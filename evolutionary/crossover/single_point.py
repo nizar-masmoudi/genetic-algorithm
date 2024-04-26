@@ -5,18 +5,8 @@ import random
 
 
 class SinglePoint(BaseCrossover):
-    def __call__(self, parent1: alg.Individual, parent2: alg.Individual) -> Sequence['alg.Individual']:
+    def __call__(self, parent1: list, parent2: list) -> Sequence[list]:
         point = random.randint(0, len(parent1) - 1)
-        child1 = alg.Individual(
-            genome=parent1.genome[:point] + parent2.genome[point:],
-            fitness_fn=parent1.fitness_fn,
-            mutation_fn=parent1.mutation_fn,
-            crossover_fn=parent1.crossover_fn
-        )
-        child2 = alg.Individual(
-            genome=parent2.genome[:point] + parent1.genome[point:],
-            fitness_fn=parent1.fitness_fn,
-            mutation_fn=parent1.mutation_fn,
-            crossover_fn=parent1.crossover_fn
-        )
+        child1 = parent1[:point] + parent2[point:]
+        child2 = parent2[:point] + parent1[point:]
         return child1, child2
