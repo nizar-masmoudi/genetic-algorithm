@@ -8,34 +8,30 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 
-N_NODES = 20
+N_NODES = 10
+POPULATION_SIZE = 20
+MAX_GENERATIONS = 20
+MUTATION_FN = TWORS(.01)
+CROSSOVER_FN = OX()
+SELECTION_FN = TournamentSelection(5, .7)
+
 nodes = list(range(N_NODES))
 coordinates = np.random.randint(0, 10, size=(N_NODES, 2))
 
 dist_matrix = np.sqrt(((coordinates[:, None] - coordinates) ** 2).sum(axis=-1))
 
 
-def fitness_fn(genome: list) -> float:
-    return 1 / dist_matrix[genome, genome[-1:] + genome[0:-1]].sum()
-
+fitness_fn = lambda genome: 1 / dist_matrix[genome, genome[-1:] + genome[0:-1]].sum()
 
 individuals = []
 node_indices = list(range(len(coordinates)))
-for _ in range(10):
+for _ in range(POPULATION_SIZE):
     rand_genome = random.sample(nodes, len(nodes))
-    individuals.append(Individual(rand_genome, fitness_fn, TWORS(.1), OX()))
-population = Population(individuals, TournamentSelection(5, .7))
-
-for individual in population.individuals:
-    print(individual, '->', round(1/individual.fitness(), 3))
-
+    individuals.append(Individual(rand_genome, fitness_fn, MUTATION_FN, CROSSOVER_FN))
+population = Population(individuals, SELECTION_FN)
 
 evolution = Evolution(population)
-evolution.simulate(10)
-print()
-for individual in evolution.population.individuals:
-    print(individual, '->', round(1/individual.fitness(), 3))
-
+evolution.simulate(MAX_GENERATIONS)
 fittest = evolution.fittest()
 
 G = nx.Graph()
